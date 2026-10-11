@@ -4,7 +4,10 @@ on:
     branches:
       - main
     paths:
-      - 'Renovate/**'
+      - 'dockerfile'
+      - 'entrypoint.sh'
+      - 'VERSION'
+  workflow_dispatch:
     
 permissions:
   contents: read
@@ -33,7 +36,7 @@ jobs:
     - name: Read version from file
       id: get_version
       run: |
-        VERSION=$(cat ./Renovate/VERSION)
+        VERSION=$(cat ./VERSION)
         echo "version=$VERSION" >> $GITHUB_OUTPUT
     
     - name: Docker metadata
@@ -49,8 +52,8 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v7
       with:
-        context: ./Renovate
-        file: ./Renovate/dockerfile
+        context: ./
+        file: ./dockerfile
         platforms: linux/amd64,linux/arm64
         push: true
         tags: ${{ steps.meta.outputs.tags }}
