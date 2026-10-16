@@ -1,4 +1,4 @@
-# Renovatebot with Cron (Rootless Docker Edition)
+# Renovatebot with Cron (Docker Edition)
 
 A lightweight, secure, and fully automated **Renovatebot** Docker image with an embedded Cron scheduler.
 
@@ -10,12 +10,11 @@ The official Renovate Docker image is designed for one-off runs or CI/CD pipelin
 
 ## 💡 Why This Was Needed (The Problem & Solution)
 
-Official Renovate images do not include an internal scheduler. Running it on a server traditionally required either:
+Official Renovate images do not include an internal scheduler. Running it on a server traditionally required:
 1. Relying on host-system crontabs (less portable and harder to manage).
-2. Using third-party images that run processes as `root` (a security risk).
 
 **Key Features of This Image:**
-* 🛡️ **Strictly Rootless / Non-Root:** All updates and Git operations run under an unprivileged `renovatebot` user inside the container.
+* 🛡️ **Non-Root Operation:** All updates and Git operations run under an unprivileged `renovatebot` user inside the container.
 * ⚡ **Immediate Startup Run + Cron:** Executes an initial update check **immediately** upon container startup—no waiting for the first cron interval—before handing off control to the background Cron daemon.
 * 🔄 **Zombie-proof Process Handling:** Uses `tini` as PID 1 to reap orphan processes and handle `docker stop` (SIGTERM) signals gracefully.
 
@@ -72,7 +71,6 @@ services:
       - RENOVATE_TOKEN=ghp_your_personal_access_token_here
       # Platform and Discovery settings (Any official Renovate env var works)
       - RENOVATE_PLATFORM=github
-      - RENOVATE_AUTODISCOVER=true
       - RENOVATE_REPOSITORIES=user/repo
 ```
 
