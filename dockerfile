@@ -1,5 +1,5 @@
 # renovate: datasource=docker depName=renovate/renovate
-FROM renovate/renovate:44.151
+FROM renovate/renovate:44.176
 
 USER root
 # hungarian mirror to make the build faster on my selfhosted runner
